@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Run `prisma generate` after making changes to Prisma schema
+
+model Users {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  name  String
+}
