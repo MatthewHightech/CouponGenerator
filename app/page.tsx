@@ -2,48 +2,60 @@
 
 // Import header from components/header
 import {gql, useQuery } from '@apollo/client';
-import Coupon from '../components/Coupon';
 import CreateCoupon from '@/components/createCoupon';
+import CouponList from '@/components/CouponList';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { useState } from 'react';
 
-const AllCouponsQuery = gql`
+const AllUsersQuery = gql`
   query {
-    coupons {
-      code
-      createdAt
-      createdBy {
-        name
-      }
-      valid
+    users {
+      name
       id
+      coupons {
+        code
+        createdAt
+        valid
+      }
     }
   }
 `;
  
 export default function HomePage() {
 
-  const {data, error, loading} = useQuery(AllCouponsQuery);
+  const {data, error, loading} = useQuery(AllUsersQuery);
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Something went wrong: {error.message}</p>
-
+  const [currentUserId, setCurrentUserId] = useState<string>()
+  // if (error) return <p>Something went wrong: {error.message}</p>
   return (
-    <div className="container my-20">
+    <div className="container my-10 mx-5 space-y-3">
 
-      <div className='container m-5'>
-        <p className='font-bold'>Coupon Generator</p>
-        <CreateCoupon></CreateCoupon>
-      </div>
+      <p className='font-bold'>Coupon Generator</p>
+      <p>Select a User to Start</p>
 
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 m-5">
-      {data?.coupons.map((coupon) => (
-        <Coupon
-          key={coupon.id}
-          code={coupon.code}
-          createdAt={new Date(coupon.createdAt)}
-        />
-      ))}
-      </div>
+      <ToggleGroup
+        type="single"
+        defaultValue=''
+        onValueChange={(value) => {
+          setCurrentUserId(value)
+          }
+        }
+        >
+        {data?.users.map((user) => (
+          <ToggleGroupItem value={user.id} key={user.id} className='h-full p-2'>
+              <p>{user.name}</p>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+              </Avatar>
+            </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+      <CreateCoupon></CreateCoupon>
+      <CouponList
+        coupons={data?.users.find(user => user.id == currentUserId)?.coupons}
+      ></CouponList>
     </div>
   );
 };

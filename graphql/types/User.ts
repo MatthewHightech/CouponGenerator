@@ -1,4 +1,4 @@
-import { objectType } from "nexus";
+import { extendType, objectType } from "nexus";
 import { Coupon } from './Coupon';
 
 
@@ -21,4 +21,16 @@ export const User = objectType({
             }
         })
     }
-})
+});
+
+export const UsersQuery = extendType({
+    type: 'Query',
+    definition(t) {
+        t.nonNull.list.field('users', {
+            type: 'User',
+            resolve(_parent, _args, ctx) {
+                return ctx.prisma.user.findMany();
+            }
+        })
+    },
+});

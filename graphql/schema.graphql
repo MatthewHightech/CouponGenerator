@@ -21,6 +21,7 @@ type Mutation {
 
 type Query {
   coupons: [Coupon]!
+  users: [User]!
 }
 
 type User {
