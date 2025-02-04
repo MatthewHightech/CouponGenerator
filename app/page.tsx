@@ -14,6 +14,7 @@ const AllUsersQuery = gql`
     users {
       name
       id
+      image
       coupons {
         code
         createdAt
@@ -47,15 +48,17 @@ export default function HomePage() {
           <ToggleGroupItem value={user.id} key={user.id} className='h-full p-2'>
               <p>{user.name}</p>
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user.image} />
               </Avatar>
             </ToggleGroupItem>
         ))}
       </ToggleGroup>
-      {/* Add cur user ID to create */}
+
       <CreateCoupon
         id={currentUserId}
+        existingCoupons={data?.users.find(user => user.id == currentUserId)?.coupons.length}
       ></CreateCoupon>
+      
       <CouponList
         coupons={data?.users.find(user => user.id == currentUserId)?.coupons}
       ></CouponList>

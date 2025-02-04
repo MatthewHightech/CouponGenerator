@@ -8,6 +8,7 @@ export const User = objectType({
         t.string('id');
         t.string('email');
         t.string('name');
+        t.string('image');
         t.nonNull.field('createdAt', { type: 'DateTime' });
         t.list.field('coupons', {
             type: Coupon,

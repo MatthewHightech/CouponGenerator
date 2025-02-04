@@ -7,13 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Run `prisma generate` after making changes to Prisma schema
+// When updating schema
+// 1. Close dev server
+// 2. Run `npx prisma generate` 
 
 model User {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   email String @unique
   name  String
+  image String?
   coupons Coupon[]
 }
 
