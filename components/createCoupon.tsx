@@ -26,9 +26,11 @@ const generateCode = () => {
   console.log(couponCode)
   return couponCode;
 }
+interface CreateCouponProps {
+  id: string;
+}
 
-
-export default function CreateCoupon() {
+export default function CreateCoupon({ id }: CreateCouponProps) {
   const [generate, {data}] = useMutation(GenerateCouponMutation);
   
   return (
@@ -37,7 +39,7 @@ export default function CreateCoupon() {
           await generate({
             variables: {
               code: generateCode(),
-              user: "679dc3111843147c8e89ffc3"
+              user: id
             }},
           )
           await apolloClient.refetchQueries({

@@ -14,7 +14,7 @@ interface CouponProps {
 
 export default function Coupon({ code, createdAt }: CouponProps) {
     return (
-      <Card className="md:h-auto p-1 ">
+      <Card className="md:h-auto p-1">
         <CardHeader>
             <CardTitle className="">
               Coupon Code: {code}

@@ -2,7 +2,7 @@
 
 // Import header from components/header
 import {gql, useQuery } from '@apollo/client';
-import CreateCoupon from '@/components/createCoupon';
+import CreateCoupon from '@/components/CreateCoupon';
 import CouponList from '@/components/CouponList';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -52,7 +52,10 @@ export default function HomePage() {
             </ToggleGroupItem>
         ))}
       </ToggleGroup>
-      <CreateCoupon></CreateCoupon>
+      {/* Add cur user ID to create */}
+      <CreateCoupon
+        id={currentUserId}
+      ></CreateCoupon>
       <CouponList
         coupons={data?.users.find(user => user.id == currentUserId)?.coupons}
       ></CouponList>
