@@ -41,10 +41,13 @@ export default function CreateCoupon({ id, existingCoupons }: CreateCouponProps)
         code: generateCode(),
         user: id
       }},
-    )
-    await apolloClient.refetchQueries({
-      include: "active",
-    });
+    ).then(async() => {
+      await apolloClient.refetchQueries({
+        include: "active",
+      });
+    }).catch((e) => {
+      console.log("Error Creating Coupon")
+    })
   }
 
   let tooltip

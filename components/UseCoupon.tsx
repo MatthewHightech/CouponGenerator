@@ -48,11 +48,10 @@ export default function UseCoupon() {
         });
         setFormMessage("Please Enter the Coupon Code");
         form.reset();
-        console.log("No Error")
         toast('Congrats! You used a Coupon 🎉')
       })
       .catch((e) => {
-        console.log("Error")
+        console.log("Error Using Coupon")
         setFormMessage("Code Does Not Exist")
       })
     }
