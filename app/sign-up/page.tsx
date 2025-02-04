@@ -9,7 +9,6 @@ import {
     CardContent
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 const SignUp = () => {

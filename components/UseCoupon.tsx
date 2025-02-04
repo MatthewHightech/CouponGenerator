@@ -3,7 +3,7 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
+import { FormControl, FormDescription, FormField, FormItem, FormMessage } from "./ui/form"
 import { Button } from "./ui/button"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./ui/input-otp"
 import { useForm } from "react-hook-form"

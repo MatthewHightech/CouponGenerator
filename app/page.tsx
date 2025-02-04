@@ -5,7 +5,6 @@ import {gql, useQuery } from '@apollo/client';
 import CreateCoupon from '@/components/CreateCoupon';
 import CouponList from '@/components/CouponList';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useState } from 'react';
 import UseCoupon from '@/components/UseCoupon';

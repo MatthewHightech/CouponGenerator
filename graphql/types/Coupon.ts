@@ -1,4 +1,4 @@
-import { arg, asNexusMethod, extendType, nonNull, objectType, stringArg } from "nexus";
+import { asNexusMethod, extendType, nonNull, objectType, stringArg } from "nexus";
 import { User } from './User';
 import { DateTimeResolver } from 'graphql-scalars';
 
