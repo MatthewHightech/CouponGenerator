@@ -3,17 +3,17 @@ import { PrismaClient, User } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-    await prisma.user.create({
-        data: {
-            email: "test@test.com",
-            name: "Matt Smith"
-        }
-    });
+    // await prisma.user.create({
+    //     data: {
+    //         email: "test@test.com",
+    //         name: "Matt Smith"
+    //     }
+    // });
 
 
     await prisma.coupon.create({
         data: {
-            code: "TEST-TEST",
+            code: "TEST-ABCD",
             valid: true,
             createdBy: {
                 connectOrCreate: {

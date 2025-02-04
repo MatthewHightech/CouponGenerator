@@ -1,4 +1,4 @@
-import { asNexusMethod, extendType, objectType } from "nexus";
+import { arg, asNexusMethod, extendType, nonNull, objectType, stringArg } from "nexus";
 import { User } from './User';
 import { DateTimeResolver } from 'graphql-scalars';
 
@@ -15,11 +15,11 @@ export const Coupon = objectType({
             type: User,
             async resolve(parent, _args, ctx) {
                 return await ctx.prisma.coupon
-                    .findUnique({
-                        where: {
-                            id: parent.id,
-                        }
-                    }).createdBy();
+                .findUnique({
+                    where: {
+                        id: parent.id,
+                    }
+                }).createdBy();
             }
         });
     }
@@ -34,5 +34,30 @@ export const CouponsQuery = extendType({
                 return ctx.prisma.coupon.findMany();
             }
         })
+    },
+});
+
+export const CouponMutation = extendType({
+    type: 'Mutation',
+    definition(t) {
+      t.nonNull.field('createCoupon', {
+        type: 'Coupon',
+        args: {
+          code: nonNull(stringArg()),      
+          user: nonNull(stringArg()),       
+        },
+        resolve(_parent, args, ctx) {
+          const coupon = {
+            code: args.code,     
+            valid: true,         
+            createdBy: {
+                connect: {id: args.user}
+            }
+          }
+          return ctx.prisma.coupon.create({
+            data: coupon
+          }); 
+        },
+      })
     },
 })
