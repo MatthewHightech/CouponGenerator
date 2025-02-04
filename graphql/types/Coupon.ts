@@ -60,4 +60,23 @@ export const CouponMutation = extendType({
         },
       })
     },
-})
+});
+
+export const DeleteCouponMutation = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("deleteCoupon", {
+      type: "Coupon",
+      args: {
+        code: nonNull(stringArg()),
+      },
+      resolve(_root, args, context) {
+        return context.prisma.coupon.delete({
+          where: {
+            code: args.code,
+          },
+        });
+      },
+    });
+  },
+});

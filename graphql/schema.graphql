@@ -17,6 +17,7 @@ scalar DateTime
 
 type Mutation {
   createCoupon(code: String!, user: String!): Coupon!
+  deleteCoupon(code: String!): Coupon!
 }
 
 type Query {

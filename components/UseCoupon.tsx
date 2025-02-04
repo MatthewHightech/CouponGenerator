@@ -7,13 +7,29 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { Button } from "./ui/button"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./ui/input-otp"
 import { useForm } from "react-hook-form"
+import { gql, useMutation } from "@apollo/client"
+import apolloClient from "../lib/apollo";
+import { useState } from "react"
+
+import toast, { Toaster } from 'react-hot-toast';
+
  
 const formSchema = z.object({
-  code: z.string().min(8),
-})
+  code: z.string(),
+});
+
+const DeleteCouponMutation = gql`
+  mutation DeleteCoupon($code: String!) {
+    deleteCoupon(code: $code) {
+      code
+    }
+  }
+`;
 
 export default function UseCoupon() {
 
+    const [deleteCoupon, {data}] = useMutation(DeleteCouponMutation);
+    const [formMessage, setFormMessage] = useState<string>("Please Enter the Coupon Code");
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -21,14 +37,29 @@ export default function UseCoupon() {
         },
     })
      
-    function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+      await deleteCoupon({
+        variables: {
+          code: values.code.toUpperCase(),
+        }},
+      ).then(async () => {
+        await apolloClient.refetchQueries({
+          include: "active",
+        });
+        setFormMessage("Please Enter the Coupon Code");
+        form.reset();
+        console.log("No Error")
+        toast('Congrats! You used a Coupon 🎉')
+      })
+      .catch((e) => {
+        console.log("Error")
+        setFormMessage("Code Does Not Exist")
+      })
     }
 
     return (
         <Form {...form}>
+        <Toaster />
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex space-x-3">
           <FormField
             control={form.control}
@@ -36,7 +67,9 @@ export default function UseCoupon() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputOTP maxLength={8} {...field}>
+                  <InputOTP
+                  maxLength={8} {...field}
+                  >
                     <InputOTPGroup>
                       <InputOTPSlot index={0} />
                       <InputOTPSlot index={1} />
@@ -51,15 +84,16 @@ export default function UseCoupon() {
                   </InputOTP>
                 </FormControl>
                 <FormDescription>
-                  Please Enter the Coupon Code
+                  {formMessage}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
    
-          <Button type="submit">Use Code</Button>
+          <Button type="submit">Use Coupon</Button>
         </form>
       </Form>
+      
     );
 }

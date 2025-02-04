@@ -20,16 +20,11 @@ const GenerateCouponMutation = gql`
 const generateCode = () => {
   let couponCode = "";
 
-  for (let i = 0; i < 9; i++) {
-      if (i == 4) {
-          couponCode += "-";
-      } else {
-          // Generate between 97 and 122 (ASCII for lowercase letters)
-          const Numtostr = Math.floor(Math.random() * 26) + 65;
-          couponCode += String.fromCharCode(Numtostr);
-      }
+  for (let i = 0; i < 8; i++) {
+      // Generate between 97 and 122 (ASCII for lowercase letters)
+      const Numtostr = Math.floor(Math.random() * 26) + 65;
+      couponCode += String.fromCharCode(Numtostr);
   }
-  console.log(couponCode)
   return couponCode;
 }
 interface CreateCouponProps {
@@ -65,7 +60,7 @@ export default function CreateCoupon({ id, existingCoupons }: CreateCouponProps)
         <TooltipTrigger asChild className='!pointer-events-auto'>
           <Button
           variant="default"
-          disabled={existingCoupons >= 5? true : false}
+          disabled={existingCoupons >= 5 || !id? true : false}
           onClick={CreateCoupon}>
             Generate Coupon
           </Button>

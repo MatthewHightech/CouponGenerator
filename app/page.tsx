@@ -39,7 +39,7 @@ export default function HomePage() {
 
       <ToggleGroup
         type="single"
-        defaultValue=''
+        defaultValue=""
         onValueChange={(value) => {
           setCurrentUserId(value)
           }
@@ -65,6 +65,7 @@ export default function HomePage() {
 
       <CouponList
         coupons={data?.users.find(user => user.id == currentUserId)?.coupons}
+        user={data?.users.find(user => user.id == currentUserId)?.name}
       ></CouponList>
     </div>
   );
