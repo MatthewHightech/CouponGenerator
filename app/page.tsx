@@ -8,6 +8,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useState } from 'react';
+import UseCoupon from '@/components/UseCoupon';
 
 const AllUsersQuery = gql`
   query {
@@ -53,12 +54,15 @@ export default function HomePage() {
             </ToggleGroupItem>
         ))}
       </ToggleGroup>
+      <div className='flex space-x-3'>
+        <CreateCoupon
+          id={currentUserId}
+          existingCoupons={data?.users.find(user => user.id == currentUserId)?.coupons.length}
+        ></CreateCoupon>
 
-      <CreateCoupon
-        id={currentUserId}
-        existingCoupons={data?.users.find(user => user.id == currentUserId)?.coupons.length}
-      ></CreateCoupon>
-      
+        <UseCoupon></UseCoupon>
+      </div>
+
       <CouponList
         coupons={data?.users.find(user => user.id == currentUserId)?.coupons}
       ></CouponList>
