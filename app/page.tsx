@@ -6,9 +6,10 @@ import CreateCoupon from '@/components/CreateCoupon';
 import CouponList from '@/components/CouponList';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UseCoupon from '@/components/UseCoupon';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 
 const AllUsersQuery = gql`
   query {
@@ -29,6 +30,16 @@ export default function HomePage() {
 
   const {data, error, loading} = useQuery(AllUsersQuery);
 
+  const [progress, setProgress] = useState(13)
+ 
+  useEffect(() => {
+    const timer = setTimeout(() => setProgress(66), 600)
+    return () => clearTimeout(timer)
+  }, [])
+
+  let loadingElement
+  if (loading) loadingElement = <Progress value={progress} className="w-[40%]" />
+
   const [currentUserId, setCurrentUserId] = useState<string>()
   // if (error) return <p>Something went wrong: {error.message}</p>
   return (
@@ -47,7 +58,7 @@ export default function HomePage() {
     <div className="container my-4 mx-5 space-y-3">
       <div>
         <p>Select a User to Start</p>
-
+        {loadingElement}
         <ToggleGroup
           type="single"
           defaultValue=""
