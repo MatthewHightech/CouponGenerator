@@ -18,7 +18,7 @@ Upon developing this project in a condensed period of 4 days, I have been able t
 - [GraphQL](https://graphql.org/)
 - [Nexus GraphQL Schemas](https://nexusjs.org/)
 - [Apollo GraphQL](https://www.apollographql.com/)
-- [Vercel Deploymenmt](https://vercel.com/docs/deployments/environments)
+- [Vercel Deployment](https://vercel.com/docs/deployments/environments)
 
 I hope you too can benifit from either peaking around in a simple implementation of many of these tools, or just feel inspired to start a learning mission of your own 🚀
 
