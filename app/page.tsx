@@ -36,6 +36,7 @@ export default function HomePage() {
     <div className='p-4 space-x-2 w-full bg-slate-200 shadow-md'>
       <p className='font-bold'>Coupon Generator</p>
       <Badge className='bg-neutral-500'>NextJS</Badge>
+      <Badge className='bg-green-800'>MongoDB</Badge>
       <Badge className='bg-teal-500'>Prisma</Badge>
       <Badge className='bg-pink-700'>GraphQL</Badge>
       <Badge className='bg-teal-800'>Nexus</Badge>
