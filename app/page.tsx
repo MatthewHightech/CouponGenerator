@@ -8,6 +8,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useState } from 'react';
 import UseCoupon from '@/components/UseCoupon';
+import { Badge } from '@/components/ui/badge';
 
 const AllUsersQuery = gql`
   query {
@@ -31,28 +32,39 @@ export default function HomePage() {
   const [currentUserId, setCurrentUserId] = useState<string>()
   // if (error) return <p>Something went wrong: {error.message}</p>
   return (
-    <div className="container my-10 mx-5 space-y-3">
-
+  <div>
+    <div className='p-4 space-x-2 w-full bg-slate-200 shadow-md'>
       <p className='font-bold'>Coupon Generator</p>
-      <p>Select a User to Start</p>
+      <Badge className='bg-neutral-500'>NextJS</Badge>
+      <Badge className='bg-teal-500'>Prisma</Badge>
+      <Badge className='bg-pink-700'>GraphQL</Badge>
+      <Badge className='bg-teal-800'>Nexus</Badge>
+      <Badge className='bg-neutral-700'>Apollo</Badge>
+      <Badge className='bg-black'>Vercel</Badge>
+    </div>
 
-      <ToggleGroup
-        type="single"
-        defaultValue=""
-        onValueChange={(value) => {
-          setCurrentUserId(value)
+    <div className="container my-4 mx-5 space-y-3">
+      <div>
+        <p>Select a User to Start</p>
+
+        <ToggleGroup
+          type="single"
+          defaultValue=""
+          onValueChange={(value) => {
+            setCurrentUserId(value)
+            }
           }
-        }
-        >
-        {data?.users.map((user) => (
-          <ToggleGroupItem value={user.id} key={user.id} className='h-full p-2'>
-              <p>{user.name}</p>
-              <Avatar>
-                <AvatarImage src={user.image} />
-              </Avatar>
-            </ToggleGroupItem>
-        ))}
-      </ToggleGroup>
+          >
+          {data?.users.map((user) => (
+            <ToggleGroupItem value={user.id} key={user.id} className='h-full p-2'>
+                <p>{user.name}</p>
+                <Avatar>
+                  <AvatarImage src={user.image} />
+                </Avatar>
+              </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </div>
       <div className='flex space-x-3'>
         <CreateCoupon
           id={currentUserId}
@@ -67,5 +79,6 @@ export default function HomePage() {
         user={data?.users.find(user => user.id == currentUserId)?.name}
       ></CouponList>
     </div>
+  </div>
   );
 };
